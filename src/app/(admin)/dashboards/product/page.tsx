@@ -13,7 +13,7 @@ const AdminProductPage = () => {
         });
         
         if (!res.ok){
-            setStatus(`Revalidate Failed at ${getDate()}`);
+            setStatus(`Revalidate Failed at ${getDate().allData}`);
             setColor("text-red-500");
             return
         } else {
