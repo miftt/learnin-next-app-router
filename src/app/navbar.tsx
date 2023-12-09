@@ -21,6 +21,9 @@ const Navbar = () => {
         <Link href={"/about/profile"}>
           <li className={`mr-3 ${pathname === "/about/profile" ? "text-blue-300" : ""} cursor-pointer hover:text-blue-300 transition`}>Profile</li>
         </Link>
+        <Link href={"/products"}>
+          <li className={`mr-3 ${pathname === "/products" ? "text-blue-300" : ""} cursor-pointer hover:text-blue-300 transition`}>Products</li>
+        </Link>
       </ul>
       </div>
       <div>

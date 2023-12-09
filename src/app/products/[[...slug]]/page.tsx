@@ -7,7 +7,11 @@ type ProductPageProps = {
 async function getData(){
     // const res = await fetch('https://fakestoreapi.com/products');
     const res = await fetch('http://localhost:3000/api/product',{
-        cache: 'no-store',
+        cache: 'force-cache',
+        next: {
+            tags: ['products'],
+            // revalidate: 15,
+        }
     });
 
     if(!res.ok){
