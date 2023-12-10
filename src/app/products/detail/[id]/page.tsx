@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function DetailProductPage(props: any){
     const {params} = props;
-    const product = await getData(`http://localhost:3000/api/product?id=${params.id}`) // HARUS SESUAI DENGAN FOLDERNYA KALAU [SLUG YA SLUG]
+    const product = await getData(`https://127.0.0.1:3000/api/product?id=${params.id}`) // HARUS SESUAI DENGAN FOLDERNYA KALAU [SLUG YA SLUG]
     // console.log(product.data)
     return(
         <div className="container mx-auto my-10">

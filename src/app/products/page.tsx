@@ -10,7 +10,7 @@ type ProductPageProps = {
 
 const ProductPage = async (props: ProductPageProps) => {
   const { params } = props;
-  const products = await getData("http://localhost:3000/api/product");
+  const products = await getData("https://127.0.0.1:3000/api/product");
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 m-5 gap-5 place-items-center">
       {/* <h1>{params.slug ? "Detail Product Page" : "Product Page"}</h1> */}

@@ -8,7 +8,7 @@ const AdminProductPage = () => {
     const [status, setStatus] = useState("");
     const [color, setColor] = useState("");
     const revalidate = async () => {
-        const res = await fetch("http://localhost:3000/api/revalidate?tag=products&secret=Mifuzi12345", {
+        const res = await fetch("https://127.0.0.1:3000/api/revalidate?tag=products&secret=Mifuzi12345", {
             method: "POST",
         });
         
