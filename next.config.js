@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images:{
-       domains: ['static.nike.com', 'fakestoreapi.com']
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'static.nike.com',
+                port: '',
+                pathname: '/a/images/**',
+            },
+        ],
     }
 }
 
