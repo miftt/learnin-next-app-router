@@ -8,7 +8,7 @@ const AdminProductPage = () => {
     const [status, setStatus] = useState("");
     const [color, setColor] = useState("");
     const revalidate = async () => {
-        const res = await fetch("http://localhost:3000/api/revalidate?tag=products&secret=123456", {
+        const res = await fetch("http://localhost:3000/api/revalidate?tag=products&secret=Mifuzi12345", {
             method: "POST",
         });
         
@@ -19,7 +19,7 @@ const AdminProductPage = () => {
         } else {
             const response = await res.json();
             if(response.revalidate){
-                setStatus(`Revalidate Success at ${getDate()}`);
+                setStatus(`Revalidate Success at ${getDate().allData}`);
                 setColor("text-green-500");
             };
         }   
