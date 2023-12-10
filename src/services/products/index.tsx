@@ -3,11 +3,11 @@ export const getData = async (url: string) => {
     //   cache: "no-store",
     // });
   const res = await fetch(url, {
-    cache: "no-store",
-    // next: {
-    //   tags: ["products"],
-    //   // revalidate: 15,
-    // },
+    cache: "force-cache",
+    next: {
+      tags: ["products"],
+      // revalidate: 15,
+    },
   });
 
   if (!res.ok) {
