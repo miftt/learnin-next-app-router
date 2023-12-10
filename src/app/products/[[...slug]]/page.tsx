@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type ProductPageProps = {
   params: {
     slug: string;
@@ -5,9 +7,9 @@ type ProductPageProps = {
 };
 
 async function getData() {
-  //   const res = await fetch("https://fakestoreapi.com/products", {
-  //     cache: "no-store",
-  //   });
+    // const res = await fetch("https://fakestoreapi.com/products", {
+    //   cache: "no-store",
+    // });
   const res = await fetch("http://localhost:3000/api/product", {
     cache: "no-store",
     // next: {
@@ -35,8 +37,10 @@ const ProductPage = async (props: ProductPageProps) => {
             key={products.id}
             className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-5"
           >
-            <img
+            <Image
               className="p-8 rounded-t-lg object-cover h-96 w-full"
+              width={500}
+              height={500}
               src={products.image}
               alt="product image"
             />
