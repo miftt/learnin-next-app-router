@@ -1,12 +1,14 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-
-import Input from "../Input";
-import Label from '../Label';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import {Toaster, toast} from 'sonner'
+
+import Input from '../Input';
+import Label from '../Label';
+
 
 
 interface LogRegProps {
@@ -21,6 +23,7 @@ interface LogRegProps {
 const LogReg: React.FC<LogRegProps> = ({
   type, /* Add other props here */ }) => {
   const { push } = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try{
@@ -33,15 +36,17 @@ const LogReg: React.FC<LogRegProps> = ({
       if(!res?.error){
         push("/dashboard");
       }else{
+        toast.error('Wrong email or password');
         console.log(res?.error);
       }
     } catch (err){
       console.log(err);
     }
   }
-  const handleRegister= (e: any) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
-    fetch('api/auth/register',{
+    setIsLoading(true);
+    const res = await fetch('api/auth/register',{
       method: 'POST',
       body: JSON.stringify({
         fullname: e.currentTarget.fullname.value,
@@ -49,16 +54,27 @@ const LogReg: React.FC<LogRegProps> = ({
         password: e.currentTarget.password.value
       })
     })
+    if(res.status === 200){
+      e.target.reset();
+      toast.success("Register success");
+      setIsLoading(false);
+      push("/login");
+    }else {
+      toast.error("Email has already been exist");
+      setIsLoading(false)
+    }
   }
   return (
     <div className="
-      h-screen
-      w-100 
-      flex 
-      justify-center 
-      items-center
-      "
+    h-screen
+    w-100 
+    flex 
+    justify-center 
+    items-center
+    flex-col
+    "
     >
+    <Toaster position="top-center" richColors/>
       <div className="
         bg-white 
         shadow-md 
