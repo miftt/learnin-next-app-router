@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { useState } from "react";
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const {status}: {status:string;} = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,12 +31,20 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="flex items-center">
+        {status === 'authenticated' ?(
+          <button
+          className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
+          onClick={() => signOut()}
+        >
+          Logout
+        </button>
+        ):
         <button
           className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
-          onClick={() => router.push("/login")}
+          onClick={() => signIn()}
         >
           Login
-        </button>
+        </button>}
         <button
           className="md:hidden text-white hover:text-blue-300 transition" 
           onClick={() => setIsOpen(!isOpen)}
