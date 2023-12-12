@@ -4,11 +4,12 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import toCapital from "@/components/toCapital";
 
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const {status}: {status:string;} = useSession();
+  const {data:session, status}: {data: any, status:string;} = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -32,12 +33,15 @@ const Navbar = () => {
       </div>
       <div className="flex items-center">
         {status === 'authenticated' ?(
+          <div className="flex">
+          <h4 className="text-white mr-5 mt-0.5 ">{toCapital(session?.user?.fullname)}</h4>
           <button
           className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
           onClick={() => signOut()}
         >
           Logout
         </button>
+          </div>
         ):
         <button
           className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
