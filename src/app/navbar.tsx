@@ -2,13 +2,12 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import toCapital from "@/components/toCapital";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const {data:session, status}: {data: any, status:string;} = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
