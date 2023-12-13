@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 import {Toaster, toast} from 'sonner'
 
 import Input from '../Input';
@@ -13,6 +13,7 @@ import Label from '../Label';
 
 interface LogRegProps {
   type: 'login' | 'register';
+  searchParams: any;
   // Add any additional props needed for Login and Register components
   // For example:
   // fullname?: string;
@@ -20,29 +21,47 @@ interface LogRegProps {
   // password?: string;
 }
 
-const LogReg: React.FC<LogRegProps> = ({
-  type, /* Add other props here */ }) => {
+const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
   const { push } = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState(type === 'login' ? 'Logging in' : 'Registering');
+
+  const callBackUrl = searchParams.callbackUrl || '/';
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLoadingText((prevLoadingText) => {
+        return prevLoadingText.includes('...') ? `${type === 'login' ? 'Logging in' : 'Registering'}` : `${prevLoadingText}.`;
+      });
+    }, 500); // Set interval to 1000ms
+
+    return () => clearInterval(intervalId); // Clear interval on unmount
+  }, [type]);
+
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    try{
-      const res = await signIn("credentials",{
+    setIsLoading(true);
+    try {
+      const res = await signIn("credentials", {
         redirect: false,
         email: e.target.email.value,
         password: e.target.password.value,
-        callbackUrl: "/dashboard"
+        callbackUrl: callBackUrl
       })
-      if(!res?.error){
-        push("/dashboard");
-      }else{
-        toast.error('Wrong email or password');
-        console.log(res?.error);
+      if (!res?.error) {
+        setIsLoading(false);
+        push(callBackUrl);
+      } else {
+        setIsLoading(false);
+        if (res.status === 401) {
+          e.target.reset();
+          toast.error('Wrong email or password');
+        }
       }
-    } catch (err){
+    } catch (err) {
       console.log(err);
     }
   }
+
   const handleRegister = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
@@ -56,8 +75,8 @@ const LogReg: React.FC<LogRegProps> = ({
     })
     if(res.status === 200){
       e.target.reset();
-      toast.success("Register success");
       setIsLoading(false);
+      toast.success("Register success");
       push("/login");
     }else {
       toast.error("Email has already been exist");
@@ -81,7 +100,7 @@ const LogReg: React.FC<LogRegProps> = ({
         border 
         border-gray-200 
         rounded-lg 
-        max-w-sm 
+        w-96
         p-4 sm:p-6 
         lg:p-8 
         dark:bg-gray-800 
@@ -114,6 +133,7 @@ const LogReg: React.FC<LogRegProps> = ({
             <Input type="password" name="password" id="password" placeholder="••••••••••••••••" required />
           </div>
           <button
+            disabled={isLoading}
             type="submit"
             className="
               w-full 
@@ -133,8 +153,7 @@ const LogReg: React.FC<LogRegProps> = ({
               dark:focus:ring-blue-800
               "
           >
-            {type === 'login' ? 'Sign in' : 'Sign up'} 
-             {" "} account
+            {isLoading ? loadingText : 'Loading...' && type === 'login' ? 'Login' : 'Sign Up'}
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             {type === 'login' ? 'Not registered yet?' : 'Have registered?'}{' '}

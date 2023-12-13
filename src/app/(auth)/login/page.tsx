@@ -1,9 +1,9 @@
 import Login from "@/components/modal/Login";
 
-const LoginPage = () => {
+const LoginPage = ({searchParams}: any) => {
     return ( 
         <div>
-            <Login />
+            <Login searchParams={searchParams}/>
         </div>
     );
 }

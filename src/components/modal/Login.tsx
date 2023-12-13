@@ -1,9 +1,15 @@
 import LoginModal from "./"
 
-const Login = () => {
+interface LoginProps {
+    searchParams: any
+}
+
+const Login: React.FC<LoginProps> = ({
+    searchParams
+}) => {
     return ( 
         <div>
-            <LoginModal type="login" />
+            <LoginModal type="login" searchParams={searchParams}/>
         </div>
      );
 }
