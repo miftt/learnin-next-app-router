@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import toCapital from "@/components/toCapital";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -21,7 +21,6 @@ const Navbar = () => {
 
   return (
     <div className="flex bg-gray-800 py-3 px-5 justify-between items-center">
-      <Toaster position="top-center" richColors />
       <div className="flex items-center">
         <h1 className="text-white">Navbar</h1>
         <ul className={`text-white md:flex md:flex-row space-x-3 ml-5 ${isOpen ? "flex flex-col" : "hidden"}`}>
