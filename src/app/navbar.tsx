@@ -5,14 +5,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import toCapital from "@/components/toCapital";
+import { Toaster, toast } from "sonner";
 
 const Navbar = () => {
   const pathname = usePathname();
   const {data:session, status}: {data: any, status:string;} = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogout = async () => {
+    setIsLoading(true);
+    toast.success("Logged out successfully");
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    signOut();
+  };
 
   return (
     <div className="flex bg-gray-800 py-3 px-5 justify-between items-center">
+      <Toaster position="top-center" richColors />
       <div className="flex items-center">
         <h1 className="text-white">Navbar</h1>
         <ul className={`text-white md:flex md:flex-row space-x-3 ml-5 ${isOpen ? "flex flex-col" : "hidden"}`}>
@@ -35,14 +44,16 @@ const Navbar = () => {
           <div className="flex">
           <h4 className="text-white mr-5 mt-0.5 ">{toCapital(session?.user?.fullname)}</h4>
           <button
+          disabled={isLoading}
           className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
-          onClick={() => signOut()}
+          onClick={() => handleLogout()}
         >
-          Logout
+          {isLoading ? 'Logging out...' : 'Logout'}
         </button>
           </div>
         ):
         <button
+          disabled={isLoading}
           className="bg-white rounded-md px-3 text-sm h-7 hover:bg-slate-300 transition mr-3"
           onClick={() => signIn()}
         >
