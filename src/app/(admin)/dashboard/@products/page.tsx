@@ -39,7 +39,7 @@ const AdminProductPage = () => {
 
     return ( 
         <div className="w-3/6 h-96 bg-gray-300 rounded-[12px] flex justify-center items-center mr-5">
-            <Toaster position="bottom-left" richColors/>
+            {/* <Toaster position="bottom-left" richColors/> */}
             <button
              onClick={() => revalidate()}
              className="bg-slate-400 m-5 rounded-md px-3 text-sm h-7 hover:bg-slate-500 transition"
