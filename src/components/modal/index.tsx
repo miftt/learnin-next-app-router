@@ -36,8 +36,12 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, [type]);
   
-  const handleLogin = async (e: any) => {
+  const getCallbackurl = () => {
     const callBackUrl = searchParams.callbackUrl || '/';
+    return callBackUrl
+  }
+
+  const handleLogin = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -45,11 +49,11 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
         redirect: false,
         email: e.target.email.value,
         password: e.target.password.value,
-        callbackUrl: callBackUrl
+        callbackUrl: getCallbackurl()
       })
       if (!res?.error) {
         setIsLoading(false);
-        push(callBackUrl);
+        push(getCallbackurl());
       } else {
         setIsLoading(false);
         if (res.status === 401) {
