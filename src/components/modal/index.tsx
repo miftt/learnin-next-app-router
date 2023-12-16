@@ -26,18 +26,18 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(type === 'login' ? 'Logging in' : 'Registering');
 
-  const callBackUrl = searchParams.callbackUrl || '/';
   useEffect(() => {
     const intervalId = setInterval(() => {
       setLoadingText((prevLoadingText) => {
         return prevLoadingText.includes('...') ? `${type === 'login' ? 'Logging in' : 'Registering'}` : `${prevLoadingText}.`;
       });
     }, 500); // Set interval to 1000ms
-
+    
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, [type]);
-
+  
   const handleLogin = async (e: any) => {
+    const callBackUrl = searchParams.callbackUrl || '/';
     e.preventDefault();
     setIsLoading(true);
     try {
