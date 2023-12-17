@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter} from 'next/navigation';
 import {Toaster, toast} from 'sonner'
+import { FcGoogle } from "react-icons/fc";
 
 import Input from '../Input';
 import Label from '../Label';
@@ -158,6 +159,32 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
               "
           >
             {isLoading ? loadingText : 'Loading...' && type === 'login' ? 'Login' : 'Sign Up'}
+          </button>
+          <hr />
+          <button
+           type='button'
+           onClick={() => signIn('google', ({callbackUrl: getCallbackurl(), redirect: false}))} 
+           className="
+             w-full 
+             text-white 
+             bg-blue-700 
+             hover:bg-blue-800 
+             focus:ring-4 
+             focus:ring-blue-300 
+             font-medium 
+             rounded-lg 
+             text-sm 
+             px-5 
+             py-2.5 
+             text-center flex
+             items-center
+             justify-center
+             dark:bg-blue-600 
+             dark:hover:bg-blue-700 
+             dark:focus:ring-blue-800
+            "
+          >
+            <FcGoogle className="text-neutral-400 hover:text-white mr-2 transition" size={26}/>Login With Google
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             {type === 'login' ? 'Not registered yet?' : 'Have registered?'}{' '}
