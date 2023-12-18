@@ -27,6 +27,7 @@ const ProductPage = async (props: ProductPageProps) => {
               height={500}
               src={products.image}
               alt="product image"
+              loading="lazy"
             />
             <div className="px-5 pb-5">
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate">
