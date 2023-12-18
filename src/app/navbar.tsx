@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import toCapital from "@/components/toCapital";
 import { toast, Toaster } from "sonner";
+import Image from "next/image";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -42,7 +43,15 @@ const Navbar = () => {
         </div>
         <div className="flex items-center">
           {status === 'authenticated' ?(
-            <div className="flex">
+            <div className="flex justify-center items-center">
+              <Image 
+               src='/images/profile.png' 
+               alt="profile" 
+               width={100} 
+               height={100} 
+               className="w-10 h-10 rounded-full mr-2"
+               loading="lazy"
+              />
             <h4 className="text-white mr-5 mt-0.5 ">{toCapital(session?.user?.fullname)}</h4>
             <button
             disabled={isLoading}
