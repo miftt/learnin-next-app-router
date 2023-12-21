@@ -1,4 +1,17 @@
-import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home - Mip Shoes",
+  description: "Shoes Shop",
+  icons: {
+    icon: "/icon.png",
+  },
+  openGraph: {
+    title: "Home - Mip Shoes",
+    description: "Shoes Shop",
+  },
+  authors: [{ name: "Mip", url: "http://localhost:3000/" }],
+};
 
 export default function Home() {
   return (
