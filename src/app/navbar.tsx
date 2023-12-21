@@ -25,7 +25,7 @@ const Navbar = () => {
       <Toaster position="top-center" richColors />
       <div className="flex bg-gray-800 py-3 px-5 justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-white">Navbar</h1>
+          <h1 className="text-white font-bold">Mip Shoes</h1>
           <ul className={`text-white md:flex md:flex-row space-x-3 ml-5 ${isOpen ? "flex flex-col" : "hidden"}`}>
             <Link href="/">
               <li className={`hover:text-blue-300 transition ${pathname === "/" ? "text-blue-300" : ""}`}>Home</li>
