@@ -35,7 +35,7 @@ const ProductPage = async (props: ProductPageProps) => {
               </h5>
               <div className="flex items-center justify-between mt-3">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                  ${products.price}
+                  Rp. {products.price}
                 </span>
                 <button
                   type="button"
