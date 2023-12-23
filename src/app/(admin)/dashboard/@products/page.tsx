@@ -21,7 +21,7 @@ const AdminProductPage = () => {
 
     const revalidate = async () => {
         setLoading(true);
-        const res = await fetch(`http://localhost:3000/api/revalidate?tag=products&secret=Mifuzi12345`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=products&secret=Mifuzi12345`, {
             method: "POST",
         });
         if (!res.ok){

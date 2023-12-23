@@ -1,6 +1,9 @@
-import { getData } from "@/services/products";
+"use client";
+
+// import { getData } from "@/services/products";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from "swr";
 
 type ProductPageProps = {
   params: {
@@ -8,14 +11,23 @@ type ProductPageProps = {
   };
 };
 
-const ProductPage = async (props: ProductPageProps) => {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const ProductPage = (props: ProductPageProps) => {
   const { params } = props;
-  const products = await getData(`http://localhost:3000/api/product`);
+  const {data} = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/product`,
+    fetcher
+  );
+  // const products = await getData(`${process.env.NEXTAUTH_URL}/api/product`);
+  const products = {
+    data: data?.data,
+  }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 m-5 gap-5 place-items-center">
       {/* <h1>{params.slug ? "Detail Product Page" : "Product Page"}</h1> */}
-      {products.data.length > 0 &&
-        products.data.map((products: any) => (
+      {products.data?.length > 0 &&
+        products.data?.map((products: any) => (
           <Link
             href={`/products/detail/${products.id}`}
             key={products.id}

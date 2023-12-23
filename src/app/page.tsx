@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"),
   title: "Home - Mip Shoes",
   description: "Shoes Shop",
   icons: {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     title: "Home - Mip Shoes",
     description: "Shoes Shop",
   },
-  authors: [{ name: "Mip", url: "http://localhost:3000/" }],
+  authors: [{ name: "Mip", url: process.env.NEXT_PUBLIC_API_URL }],
 };
 
 export default function Home() {
