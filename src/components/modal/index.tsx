@@ -14,7 +14,7 @@ import Label from '../Label';
 
 interface LogRegProps {
   type: 'login' | 'register';
-  searchParams: any;
+  searchParams?: any;
   // Add any additional props needed for Login and Register components
   // For example:
   // fullname?: string;
