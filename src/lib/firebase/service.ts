@@ -1,6 +1,7 @@
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, updateDoc, where, startAt } from "firebase/firestore";
 import app from "./init";
 import bcrypt from 'bcrypt'
+import toCapital from "@/components/toCapital";
 
 const firestore = getFirestore(app);
 
@@ -20,7 +21,36 @@ export async function retrieveDataById(collectionName: string, id: string){
 
     return data;
 }
+export async function retrieveDataByName(data: {name: string}) {
+    const dataName = toCapital(data.name);
+    console.log(dataName)
+    const q = query(
+     collection(firestore, "products"), 
+     where("name", ">=", dataName),
 
+    );
+    const snapshot = await getDocs(q);
+    console.log('Snapshot is empty:', snapshot.empty);
+    console.log(q)
+    console.log(snapshot)
+    let products:any = [];
+    snapshot.docs.map((doc) => {
+        const product = {
+            id: doc.id,
+            ...doc.data(),
+        };
+        products.push(product);
+    });
+    console.log(products)
+    if(products.length > 0){
+        return products;
+    } else{
+        return null;
+    }
+}
+
+
+  
 export async function register(
     data: {
         fullname: string;
@@ -64,6 +94,9 @@ export async function login(data: {email: string}){
         id: doc.id,
         ...doc.data(),
     }));
+    console.log(q)
+    console.log(snapshot)
+    console.log(users)
     
     if(users){
         return users[0];

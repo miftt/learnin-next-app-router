@@ -1,4 +1,5 @@
-import { retrieveData, retrieveDataById } from "@/lib/firebase/service";
+import { retrieveData, retrieveDataById, retrieveDataByName } from "@/lib/firebase/service";
+import { query } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 // const data = [
@@ -37,8 +38,27 @@ import { NextRequest, NextResponse } from "next/server";
 // ];
 
 export async function GET(request: NextRequest) {
+  
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const q = searchParams.get("q");
+
+  if (q) {
+    const detailProduct = await retrieveDataByName({ name: q });
+    if (detailProduct) {
+      return NextResponse.json({
+        status: 200,
+        message: "Success",
+        data: detailProduct,
+      });
+    }
+    return NextResponse.json({
+      status: 404,
+      message: "Not Found",
+      data: {},
+    });
+  }
+
   if (id) {
     const detailProduct = await retrieveDataById("products", id);
     if (detailProduct) {
